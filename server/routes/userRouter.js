@@ -9,5 +9,7 @@ router.get('/auth', authMiddleware, userController.check)
 router.post('/addCoinToBasket', authMiddleware,userController.addCoinToBasket)
 router.post('/editCoinBasketCount', authMiddleware,userController.editCoinBasketCount)
 router.get('getBasketContent',authMiddleware,userController.getBasketContent)
+router.post('/deleteUserAccount', authMiddleware,userController.deleteUserAccount)
+router.post('/changePassword', authMiddleware,userController.changePassword)
 
 module.exports = router

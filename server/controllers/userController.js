@@ -90,6 +90,7 @@ class UserController {
         await User.destroy({
             where: {id: id}
         })
+        return res.status(200).json("OK");
     }
     async changePassword(req, res,next) {
         const {password,old_password} = req.body
