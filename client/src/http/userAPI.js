@@ -18,3 +18,12 @@ export const check = async () => {
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }
+
+export const rename = async (password)  => {
+    const {data} = await $host.post('api/user/changePassword', {password})
+    return data
+}
+export const deletes = async ()  => {
+    const {data} = await $host.post('api/user/deleteUserAccount')
+    return data
+}
