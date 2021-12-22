@@ -16,21 +16,21 @@ const Admin = () => {
                 className="mt-4 p-2"
                 onClick={() => setTypeVisible(true)}
             >
-                Добавить тип
+                test
             </Button>
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
                 onClick={() => setBrandVisible(true)}
             >
-                Добавить бренд
+                Добавить страну
             </Button>
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
                 onClick={() => setDeviceVisible(true)}
             >
-                Добавить устройство
+                Добавить монету
             </Button>
             <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
             <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)}/>
