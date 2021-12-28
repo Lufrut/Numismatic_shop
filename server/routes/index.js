@@ -1,11 +1,13 @@
 const Router = require('express')
 const router = new Router()
-const coinRouter = require('./coinRouter')
+const deviceRouter = require('./deviceRouter')
 const userRouter = require('./userRouter')
-const countryRouter = require('./countryRouter')
+const brandRouter = require('./brandRouter')
+const typeRouter = require('./typeRouter')
 
 router.use('/user', userRouter)
-router.use('/country', countryRouter)
-router.use('/coin', coinRouter)
+router.use('/type', typeRouter)
+router.use('/brand', brandRouter)
+router.use('/device', deviceRouter)
 
 module.exports = router

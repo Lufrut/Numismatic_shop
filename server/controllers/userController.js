@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User, Basket, BasketCoin, Coin} = require('../models/models')
+const {User, Basket} = require('../models/models')
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -42,45 +42,6 @@ class UserController {
         return res.json({token})
     }
 
-    async addCoinToBasket(req, res, next) {
-        const {coinId} = req.body
-        const basket = await Basket.findOne({where: {userId: req.user.id}})
-        const checkCoinInBasket = await BasketCoin.findOne({where: {coinId, basketId: basket.id}})
-        if (checkCoinInBasket) {
-            return next(ApiError.badRequest("Товар уже в корзине!"))
-        }
-        await BasketCoin.create({
-            basketId: basket.id,
-            coinId,
-            count: 1,
-        })
-    }
-
-    async editCoinBasketCount(req, res, next) {
-        const {coinId, count} = req.body
-        const basket = await Basket.findOne({where: {userId: req.user.id}})
-        const coinBasket = await BasketCoin.findOne({where: {coinId, basketId: basket.id}})
-        if (!coinBasket) {
-            return next(ApiError.badRequest("Товар уже в корзине!"))
-        }
-        await BasketCoin.update({count}, {where: {id}})
-        return res.statusCode(200);
-    }
-
-    async getBasketContent(req, res, next) {
-        let {limit, page} = req.query
-        const basket = await Basket.findOne({where: {userId: req.user.id}})
-        const coinBasket = await BasketCoin.findOne({where: {basketId: basket.id}})
-        if (!coinBasket) {
-            return next(ApiError.badRequest("Товар уже в корзине!"))
-        }
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
-        const content = await BasketCoin.findAndCountAll({where: {basketId: basket.id}, limit, offset})
-        return res.json(content)
-    }
-
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.email, req.user.role)
         return res.json({token})
@@ -111,4 +72,5 @@ class UserController {
         return res.status(200).json("OK");
     }
 }
+
 module.exports = new UserController()

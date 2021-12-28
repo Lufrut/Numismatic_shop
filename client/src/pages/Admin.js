@@ -16,7 +16,7 @@ const Admin = () => {
                 className="mt-4 p-2"
                 onClick={() => setTypeVisible(true)}
             >
-                test
+                Добавить тип
             </Button>
             <Button
                 variant={"outline-dark"}

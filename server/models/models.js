@@ -10,60 +10,83 @@ const User = sequelize.define('user', {
 
 const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    userId: {type: DataTypes.INTEGER,allowNull: false},
 })
 
-const BasketCoin = sequelize.define('basket_coin', {
+const BasketDevice = sequelize.define('basket_device', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    basketId: {type: DataTypes.INTEGER,allowNull: false},
-    coinId: {type: DataTypes.INTEGER,allowNull: false},
-    count: {type: DataTypes.INTEGER,allowNull: false},
 })
 
-const Coin = sequelize.define('coin', {
+const Device = sequelize.define('device', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    country_id:{type: DataTypes.INTEGER, allowNull: false},
-    year:{type: DataTypes.INTEGER, allowNull: false},
+    rating: {type: DataTypes.INTEGER, defaultValue: 0},
     img: {type: DataTypes.STRING, allowNull: false},
 })
 
-const Country = sequelize.define('country', {
+const Type = sequelize.define('type', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
 })
 
-const CoinInfo = sequelize.define('coin_info', {
+const Brand = sequelize.define('brand', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
+})
+
+const Rating = sequelize.define('rating', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    rate: {type: DataTypes.INTEGER, allowNull: false},
+})
+
+const DeviceInfo = sequelize.define('device_info', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
-    coinId: {type: DataTypes.INTEGER, allowNull: false},
+})
+
+const TypeBrand = sequelize.define('type_brand', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
 
-Basket.hasMany(BasketCoin)
-BasketCoin.belongsTo(Basket)
+User.hasMany(Rating)
+Rating.belongsTo(User)
 
-Coin.hasMany(BasketCoin)
-BasketCoin.belongsTo(Coin)
+Basket.hasMany(BasketDevice)
+BasketDevice.belongsTo(Basket)
 
-Country.hasMany(Coin)
-Coin.belongsTo(Country)
+Type.hasMany(Device)
+Device.belongsTo(Type)
 
-Coin.hasMany(CoinInfo, {as: 'info'});
-CoinInfo.belongsTo(Coin)
+Brand.hasMany(Device)
+Device.belongsTo(Brand)
 
+Device.hasMany(Rating)
+Rating.belongsTo(Device)
+
+Device.hasMany(BasketDevice)
+BasketDevice.belongsTo(Device)
+
+Device.hasMany(DeviceInfo, {as: 'info'});
+DeviceInfo.belongsTo(Device)
+
+Type.belongsToMany(Brand, {through: TypeBrand })
+Brand.belongsToMany(Type, {through: TypeBrand })
 
 module.exports = {
     User,
     Basket,
-    BasketCoin,
-    Coin,
-    CoinInfo
+    BasketDevice,
+    Device,
+    Type,
+    Brand,
+    Rating,
+    TypeBrand,
+    DeviceInfo
 }
 
 
