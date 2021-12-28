@@ -27,7 +27,7 @@ const NavBar = observer(() => {
                             variant={"outline-light"}
                             onClick={() => history.push(ADMIN_ROUTE)}
                         >
-                            Админ панель
+                            Создать товар
                         </Button>
                         <Button
                             variant={"outline-light"}
